@@ -31,6 +31,7 @@ The frontend is using Angular. We also have @Angular/Routing for redirects withi
 
 1) Navigate in your CLI to the backend folder of the project, then do...
   * set FLASK_APP=./src/main.py (This is an environment variable, so on linux it'll be "export FLASK_APP=./src/main.py",      on Windows it'll be "set FLASK_APP=./src/main.py"
+  * Next, still in the backend directory, do "pipenv install flask". You might also want to add "pipenv install sqlalchemy psycopg2-binary" if the database has been integrated into the webapp, but at the moment it should run without those. 
   * Now you need to enter the virtual environment for the project so you have access to all of the dependencies. Just do      "pipenv shell"
   * Finally, you should be able to now do "flask run -h 0.0.0.0"
 2) Next you'll need to install the angular CLI. This can be done with "npm install -g @angular/cli". You probably don't want to do this in the virtual environment  for the backend, so open a new terminal window to make sure that doesn't happen. 
