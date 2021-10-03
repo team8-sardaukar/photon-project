@@ -26,3 +26,12 @@ For the backend I went ahead and installed SQLAlchemy and the psycopg2 driver fo
 *Frontend*
 
 The frontend is using Angular. We also have @Angular/Routing for redirects within the webapp. 
+
+# Running The Webapp
+
+1) Navigate in your CLI to the backend folder of the project, then do...
+  * set FLASK_APP=./src/main.py (This is an environment variable, so on linux it'll be "export FLASK_APP=./src/main.py",      on Windows it'll be "set FLASK_APP=./src/main.py"
+  * Now you need to enter the virtual environment for the project so you have access to all of the dependencies. Just do      "pipenv shell"
+  * Finally, you should be able to now do "flask run -h 0.0.0.0"
+2) In a new terminal window, navigate to the frontend directory in the project, then do "ng serve"
+3) You should now be able to navigate to http://localhost:4200 in your browser and see the test page!
