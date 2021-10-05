@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import * as React from 'react';
 
 @Component({
@@ -14,6 +15,8 @@ export class PlayerEntryComponent implements OnInit{
   ) { 
 
   }
+
+  playerEntryControl = new FormControl('');
 
   ngOnInit(): void {
   }
