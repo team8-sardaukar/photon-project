@@ -2,7 +2,6 @@ anytree==2.8.0
 appdirs==1.4.4
 backports.entry-points-selectable==1.1.0
 Beaker==1.11.0
-Brlapi
 btrfsutil==5.14.1
 CacheControl==0.12.6
 certifi==2021.5.30
