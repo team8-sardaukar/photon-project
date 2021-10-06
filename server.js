@@ -4,11 +4,11 @@ const path = require('path')
 
 const app = express()
 
-app.subscribe(express.static('/dist/frontend/frontend'));
+app.subscribe(express.static(__dirname + '/frontend/dist'));
 
 app.get('/*', function(req,res) {
 
-    res.sendFile('index.html', {root: '/dist/frontend/frontend'});
+    res.sendFile('index.html', {root: './frontend/dist'});
 
 });
 
