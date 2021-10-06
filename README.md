@@ -20,8 +20,8 @@ directory and run "pip install pipenv"
   * run "ng build --build-optimizer --baseHref="/static"
   * Now you're going to need to copy the updated built Angular files in the static and templates, copy all of the files
   in /dist except for "index.html" to /static. On Linux you can do 
-  "cp ./dist/* ./static && rm -rf ./static/index.html"
-  * Then you need to copy index.html from /dist to /templates. On Linux you can do "cp ./dist/index.html ./templates/index.html"
+  "cp -r ./dist/* ./static && rm -rf ./static/index.html"
+  * Then you need to copy index.html from /dist to /templates. On Linux you can do "cp -r ./dist/index.html ./templates/index.html"
 8) Now you'll need to start the webserver as we actually use it, if you still have the flask instance from earlier running,
   you'll want to go ahead and stop that now, then continue. 
   * Install gunicorn in the pipenv: "pipenv install gunicorn"
