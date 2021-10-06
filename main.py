@@ -1,13 +1,10 @@
-from flask import Flask, request, render_template, redirect
-from flask.helpers import send_from_directory
+from flask import Flask, request, render_template
 from flask_cors import CORS
 import os
 
 #template_dir = os.path.abspath('/dist')
 #absTest = '/home/ivris/Documents/photon-project/templates'
-app = Flask(__name__
-#, template_folder=absTest
-)
+app = Flask(__name__)
 
 @app.route('/players')
 def get_player_by_id():
