@@ -17,7 +17,8 @@ directory and run "pip install pipenv"
   * Do "flask run" Theoretically the webserver should start
 7) Now you'll need to build the Angular application, from outside the pipenv terminal but in the photon-project directory
   do the following:
-  * run "ng build --build-optimizer --baseHref="/static"
+  * You might need to run "npm update" here to ensure it can find the Angular devtools
+  * run "ng build --build-optimizer --baseHref="/static/"" <-- NOTE THAT YOU NEED TO INCLUDE ONE OF THESE QUOTATION MARKS
   * Now you're going to need to copy the updated built Angular files in the static and templates, copy all of the files
   in /dist except for "index.html" to /static. On Linux you can do 
   "cp -r ./dist/* ./static && rm -rf ./static/index.html"
