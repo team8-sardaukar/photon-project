@@ -4,11 +4,11 @@ const path = require('path')
 
 const app = express()
 
-app.use(express.static(__dirname + '/dist/photon-project'));
+app.use(express.static('./dist'));
 
 app.get('/*', function(req,res) {
 
-    res.sendFile(path.join(__dirname+'/dist/photon-project/index.html'));
+    res.sendFile('index.html', {root: 'dist/'});
 
 });
 
