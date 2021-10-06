@@ -23,12 +23,17 @@ directory and run "pip install pipenv"
   in /dist except for "index.html" to /static. On Linux you can do 
   "cp -r ./dist/* ./static && rm -rf ./static/index.html"
   * Then you need to copy index.html from /dist to /templates. On Linux you can do "cp -r ./dist/index.html ./templates/index.html"
-8) Now you'll need to start the webserver as we actually use it, if you still have the flask instance from earlier running,
+8) (ONLY FOR THOSE NOT RUNNING WINDOWS) Now you'll need to start the webserver as we actually use it, if you still have the flask instance from earlier running,
   you'll want to go ahead and stop that now, then continue. 
   * Install gunicorn in the pipenv: "pipenv install gunicorn"
   * Open the pipenv shell: "pipenv shell"
   * Do: "gunicorn main:app"
-9) Assuming all went well, you should now be able to navigate to "localhost:8000" in your browser and see the webapp!
+  * Assuming all went well, you should now be able to navigate to "localhost:8000" in your browser and see the webapp!
+8) (DON'T DO THIS IF YOU DID THE PREVIOUS NUMBER 8) You can just use Flask to host the webserver if you can't use guinicorn
+  * Outside of virtual environment do "set FLASK_APP="main.py"
+  * Then do: "pipenv shell"
+  * Now do "flask run"
+  * Now go to the IP address and port it gives you in your browser and it should work!
 ***
 ## Deploying to Heroku
 *This assumes that you are already logged in to the Heroku CLI*
