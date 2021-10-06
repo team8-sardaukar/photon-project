@@ -1,39 +1,27 @@
-# photon-project
-Programming the Photon Laser Tag game
+# PhotonProject
 
-# Architecture
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
 
-*Dependencies*
+## Development server
 
-* **pipenv**
-You'll need pipenv installed on your system and probably in the $PATH for your system if you want to be able to easily use in the CLI. You can install pipenv with pip from Python. If you're on Windows you'll have to add it to your $PATH variable manually, on Linux when you run "sudo pip install pipenv" it should add it to your path. pipenv is basically an environment to put our python dependencies for this project in so that we don't have to have everything installed on the host machine. For instance, Flask, SQLAlchemy, etc... can all just be packaged with the project using pipenv instead of us needing to install it. 
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-* **Node.js** 
-Go ahead and grab Node.js and NPM to install on your system as well if you will need to manage Angular. NPM is basically a package manager that we can use to install Angular and manage the additional components that are optional with the framework, like @Angular/Routing. 
+## Code scaffolding
 
-* **Heroku**
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-* **PostgreSQL**
+## Build
 
-#
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-*Backend*
+## Running unit tests
 
-For the backend I went ahead and installed SQLAlchemy and the psycopg2 driver for PostgreSQL to be compatible with SQLAlchemy. You guys don't have to use that if you have a better method, though, it was just a recommended solution I found and went ahead and set up. 
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-#
+## Running end-to-end tests
 
-*Frontend*
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-The frontend is using Angular. We also have @Angular/Routing for redirects within the webapp. 
+## Further help
 
-# Running The Webapp
-
-1) Navigate in your CLI to the backend folder of the project, then do...
-  * set FLASK_APP=./src/main.py (This is an environment variable, so on linux it'll be "export FLASK_APP=./src/main.py",      on Windows it'll be "set FLASK_APP=./src/main.py"
-  * Next, still in the backend directory, do "pipenv install flask". You might also want to add "pipenv install sqlalchemy psycopg2-binary" if the database has been integrated into the webapp, but at the moment it should run without those. 
-  * Now you need to enter the virtual environment for the project so you have access to all of the dependencies. Just do      "pipenv shell"
-  * Finally, you should be able to now do "flask run -h 0.0.0.0"
-2) Next you'll need to install the angular CLI. This can be done with "npm install -g @angular/cli". You probably don't want to do this in the virtual environment  for the backend, so open a new terminal window to make sure that doesn't happen. 
-3) In a new terminal window, navigate to the frontend directory in the project, then do "ng serve". If that didn't work then try running "npm update". Wait for that to complete then do "ng serve" again. 
-4) You should now be able to navigate to http://localhost:4200 in your browser and see the test page!
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
