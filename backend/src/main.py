@@ -1,5 +1,4 @@
 # coding=utf-8
-# comment for deployment
 
 from flask import Flask, request
 from flask_cors import CORS
