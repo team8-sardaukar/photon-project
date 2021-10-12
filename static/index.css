@@ -1,6 +1,6 @@
 .logo-background {
     background-position: center;
-    background-image: url('../assets/logo.jpg');
+    background-image: url('logo.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
     background-blend-mode: multiply;
