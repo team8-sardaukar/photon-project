@@ -1,0 +1,1 @@
+For this to work correctly, the player-entry .css file needs to be copied to the static folder, and the player-entry .html file needs to be copied to templates.
