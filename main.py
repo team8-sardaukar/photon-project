@@ -13,10 +13,31 @@ def home():
 def playerEntry():
     return render_template('player-entry.html')
 
-@app.route('/player-entry', methods=['POST'])
+@app.route('/player-entry', methods=['POST', 'GET'])
 def get_player_by_id():
-    global player
-    return jsonify(player['data'])
+    # Still needs to submit to database
+    greenId = request.form["GreenId0"]
+    greenName = request.form["GreenName0"]
+    greenEntry = [greenId, greenName]
+    redId = request.form["RedID0"]
+    redName = request.form["RedName0"]
+    redEntry = [redId, redName]
+    #global player
+    #return jsonify(player['data'])
+    if redId and redName and greenId and greenName:
+        return jsonify(greenEntry, redEntry)
+    elif not redId and greenId:
+        if not greenName:
+            return jsonify(greenId)
+        else:
+            return jsonify(greenEntry)
+    elif not greenId and redId:
+        if not redName:
+            return jsonify(redId)
+        else:
+            return jsonify(redEntry)
+    else:
+        return jsonify("No input")
 
 if __name__ == '__main__':
     app.run()
