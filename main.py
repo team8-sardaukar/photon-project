@@ -37,7 +37,7 @@ def get_player_by_id():
         else:
             return jsonify(redEntry)
     else:
-        return jsonify("No input")
+        return render_template('player-entry.html')
 
 if __name__ == '__main__':
     app.run()
