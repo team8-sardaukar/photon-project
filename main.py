@@ -1,9 +1,15 @@
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
+from entities.entity import Session, engine, Base
+from entities.player import Player
 
 #template_dir = os.path.abspath('/dist')
 #absTest = '/home/ivris/Documents/photon-project/templates'
 app = Flask(__name__)
+
+Base.metadata.create_all(engine)
+session = Session()
+players = session.query(Player).all()
 
 @app.route('/', methods=['GET'])
 def home():
@@ -43,11 +49,6 @@ if __name__ == '__main__':
     app.run()
     CORS(app)
 
-player = {
-    "data": [
-        {
-            "ID": "9982753",
-            "username": "imverycool"
-        },
-    ]
-}
+print('PLAYERS: ')
+for player in players:
+    print(f'({player.id}) {player.codename}')
