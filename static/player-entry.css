@@ -52,3 +52,9 @@
     width: 100vw;
     margin: 0vw;
 }
+.flashes {
+    background-color: red;
+    border: 3px solid #f1f1f1;
+    text-align: center;
+    list-style-type: none;
+}

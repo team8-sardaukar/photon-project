@@ -12,3 +12,6 @@ Base = declarative_base()
 
 class Entity():
     id = Column(Integer, primary_key=True)
+
+    def __init__(self, id):
+        self.id = id
