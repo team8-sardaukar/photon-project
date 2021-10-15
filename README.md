@@ -5,16 +5,16 @@ Programming the Photon Laser Tag game
 *These are only necessary for setting up a local dev environment*
 1) Install pipenv to set up a virtual environment for the Python side of the webapp. Go to your photon-project
 directory and run `pip install pipenv`
-4) Create the virtual environment for the application on your machine: `pipenv --three` (still in photon-project)
-5) Install packages for connecting to database: `pipenv install sqlalchemy psycopg2-binary`
-6) Install packages for webserver: `pipenv install flask marshmallow flask-cors`
-7) (ONLY FOR THOSE NOT RUNNING WINDOWS) Now you'll need to start the webserver as we actually use it, if you still have the flask instance from earlier running,
+2) Create the virtual environment for the application on your machine: `pipenv --three` (still in photon-project)
+3) Install packages for connecting to database: `pipenv install sqlalchemy psycopg2-binary`
+4) Install packages for webserver: `pipenv install flask marshmallow flask-cors`
+5) (ONLY FOR THOSE NOT RUNNING WINDOWS) Now you'll need to start the webserver as we actually use it, if you still have the flask instance from earlier running,
   you'll want to go ahead and stop that now, then continue. 
   * Install gunicorn in the pipenv: `pipenv install gunicorn`
   * Open the pipenv shell: `pipenv shell`
   * Do: `gunicorn main:app`
   * Assuming all went well, you should now be able to navigate to "localhost:8000" in your browser and see the webapp!
-8) (DON'T DO THIS IF YOU DID NUMBER 9) You can just use Flask to host the webserver if you can't use guinicorn
+6) (DON'T DO THIS IF YOU DID NUMBER 9) You can just use Flask to host the webserver if you can't use guinicorn
   * Outside of virtual environment do `set FLASK_APP=main.py`
   * Then do: `pipenv shell`
   * Now do `flask run`
