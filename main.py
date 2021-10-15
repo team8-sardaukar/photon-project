@@ -39,11 +39,11 @@ def home():
     return render_template('index.html')
 
 @app.route('/player-entry', methods=['GET'])
-def playerEntry():
-    return render_template('player-entry.html')
-
-@app.route('/player-entry', methods=['GET'])
 def playerEntryScreen():
+    global playersListRed
+    global playersListGreen
+    playersListGreen = []
+    playersListRed = []
     return render_template('player-entry.html')
 
 @app.route('/player-entry', methods=['POST'])
