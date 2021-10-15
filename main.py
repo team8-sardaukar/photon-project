@@ -3,6 +3,7 @@ from sqlalchemy.sql.expression import update
 from flask_cors import CORS
 from entities.entity import Session, engine, Base
 from entities.player import Player
+from time import sleep
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -65,6 +66,7 @@ def getPlayerByID():
         players = session.query(Player).all()
         updatePlayers(redId, redName, 1)
         updatePlayers(greenId, greenName, 0)
+        sleep(1)
         return render_template('player-entry.html', redList = playersListRed, greenList = playersListGreen)
     elif not redId and greenId:
         if not greenName:
@@ -75,6 +77,7 @@ def getPlayerByID():
                     foundEntry = 1
             if (foundEntry != 1):
                 flash('NO PLAYER FOUND BY THAT ID! ENTER A NEW CODENAME FOR THAT PLAYER ID!')
+            sleep(1)
             return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
         else:
             entry = Player(greenId, greenName)
@@ -82,6 +85,7 @@ def getPlayerByID():
             session.commit()
             players = session.query(Player).all()
             updatePlayers(greenId, greenName, 0)
+            sleep(1)
             return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
     elif not greenId and redId:
         if not redName:
@@ -92,6 +96,7 @@ def getPlayerByID():
                     foundEntry = 1
             if (foundEntry != 1):
                 flash('NO PLAYER FOUND BY THAT ID! ENTER A NEW CODENAME FOR THAT PLAYER ID!')
+            sleep(1)
             return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
         else:
             entry = Player(redId, redName)
@@ -99,6 +104,7 @@ def getPlayerByID():
             session.commit()
             players = session.query(Player).all()
             updatePlayers(redId, redName, 1)
+            sleep(1)
             return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
     else:
         return render_template('player-entry.html')
