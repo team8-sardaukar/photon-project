@@ -21,13 +21,13 @@
                                 <h2>GREEN TEAM</h2>
                                 <div class="row">
                                     <div class="column">
-                                        {% for item in data %}
-                                        <pre>{{item.id}}</pre>
+                                        {% for item in greenList %}
+                                            <pre>{{item.id}}</pre>
                                         {% endfor %}
                                     </div>
                                     <div class="column">
-                                        {% for item in data %}
-                                        <pre>{{item.codename}}</pre>
+                                        {% for item in greenList %}
+                                            <pre>{{item.codename}}</pre>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -52,6 +52,18 @@
                         <div class="column">
                             <div class="red-team">
                             <h2>RED TEAM</h2>
+                            <div class="row">
+                                <div class="column">
+                                    {% for item in redList %}
+                                        <pre>{{item.id}}</pre>
+                                    {% endfor %}
+                                </div>
+                                <div class="column">
+                                    {% for item in redList %}
+                                        <pre>{{item.codename}}</pre>
+                                    {% endfor %}
+                                </div>
+                            </div>
                             <input type="text" id="RedID0" name="RedID0" placeholder="Enter player ID"><input type="text" id="RedName0" name="RedName0" placeholder="Enter codename"><br><br>
                             <input type="hidden" id="RedID1" name="RedID1" placeholder="Enter player ID"><input type="hidden" id="RedName1" name="RedName1"><br><br>
                             <input type="hidden" id="RedID2" name="RedID2" placeholder="Enter player ID"><input type="hidden" id="RedName2" name="RedName2"><br><br>
