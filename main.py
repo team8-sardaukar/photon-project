@@ -22,18 +22,39 @@ playersListEx = [
 
 playersListGreen = []
 playersListRed = []
+redScore = 0
+greenScore = 0
 
-def updatePlayers(id, codename, team=0): #team 0 = green, 1 = red
+def updatePlayers(id, codename, team=0, score=0): #team 0 = green, 1 = red
     global players
     global playersListRed
     global playersListGreen
     for player in players:
         if (int(id) == player.id):
-            newPlayerDict = {"id":id, "codename":codename}
+            newPlayerDict = {"id":id, "codename":codename, "score":score}
             if (team == 0):
                 playersListGreen.append(newPlayerDict.copy())
             else:
-                playersListRed.append(newPlayerDict.copy())  
+                playersListRed.append(newPlayerDict.copy())
+    
+    #updatePlayerScore(1)
+
+def updatePlayerScore(id):
+    print("updating score!")
+    global playersListGreen
+    global playersListRed
+    global redScore
+    global greenScore
+
+    for player in playersListGreen:
+        if (int(player["id"]) == id):
+            player["score"]+=10
+            greenScore+=10
+    
+    for player in playersListRed:
+        if (int(player["id"]) == id):
+            player["score"]+=10
+            redScore+=10
 
 @app.route('/', methods=['GET'])
 def home():
@@ -45,7 +66,7 @@ def playerEntryScreen():
     global playersListGreen
     playersListGreen = []
     playersListRed = []
-    return render_template('player-entry.html')
+    return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
 
 @app.route('/player-entry', methods=['POST'])
 def getPlayerByID():
@@ -101,8 +122,31 @@ def getPlayerByID():
             players = session.query(Player).all()
             updatePlayers(redId, redName, 1)
             return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
+    elif greenId and redId:
+        if (not greenName) and (not redName):
+            foundEntry = 0
+            for player in players:
+                if (int(redId) == player.id):
+                    updatePlayers(redId, player.codename, 1)
+                    foundEntry = 1
+            if (foundEntry != 1):
+                flash('NO PLAYER FOUND BY THAT ID! ENTER A NEW CODENAME FOR THAT PLAYER ID!')
+            foundEntry = 0
+            for player in players:
+                if (int(greenId) == player.id):
+                    updatePlayers(greenId, player.codename, 0)
+                    foundEntry = 1
+            if (foundEntry != 1):
+                flash('NO PLAYER FOUND BY THAT ID! ENTER A NEW CODENAME FOR THAT PLAYER ID!')
+            return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
     else:
-        return render_template('player-entry.html')
+        return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
+
+@app.route('/play-action', methods=['GET'])
+def playActionScreen():
+    global playersListRed
+    global playersListGreen
+    return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore)
 
 if __name__ == '__main__':
     app.run()
