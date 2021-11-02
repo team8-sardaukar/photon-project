@@ -1,0 +1,56 @@
+<link rel="icon" type="image/x-icon" href="/static/favicon.png">
+<link rel="stylesheet" href="/static/player-entry.css"></head>
+<script src="{{url_for('static', filename='player-entry.js')}}"></script>
+<body style="margin: 0;">
+    <div class="black-bg">
+        <div class="logo-background">
+            <div class="bg-text" style="height:80%">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class=flashes>
+                            {% for message in messages %}
+                                <li>{{message}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %} 
+                {% endwith %}
+                    <div class="row">
+                        <div class="column">
+                            <div class="green-team">
+                                <h2>ALPHA GREEN</h2>
+                                <div class="row">
+                                    <div class="column">
+                                        {% for item in greenList %}
+                                            <pre>{{item.codename}}</pre>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="column">
+                                        {% for item in greenList %}
+                                            <pre>{{item.score}}</pre>
+                                        {% endfor %}
+                                        <pre>{{greenScore}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="red-team">
+                            <h2>ALPHA RED</h2>
+                            <div class="row">
+                                <div class="column">
+                                    {% for item in redList %}
+                                        <pre>{{item.codename}}</pre>
+                                    {% endfor %}
+                                </div>
+                                <div class="column">
+                                    {% for item in redList %}
+                                        <pre>{{item.score}}</pre>
+                                    {% endfor %}
+                                    <pre>{{redScore}}</pre>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>
