@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<link rel="icon" type="image/x-icon" href="/static/favicon.png">
+<link rel="stylesheet" href="/static/player-entry.css"></head>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="30; url='play-action'" /> 
+</head>
+
+<body style="margin: 0;">
+    <div class="black-bg">
+        <div class="logo-background">
+            <div class="bg-text" style="height:80%">
+				<p id="demo" style="color:white; font-size:80px"</p>
+			</div>
+		</div>
+	</div>
+
+<script>
+// Set the time
+var startTime = new Date().getTime();
+
+// Updates every second
+var x = setInterval(function() {
+
+  // Get the date and time that the page is loaded
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date. 30000 = 30 seconds in milliseconds Ignore the following: <meta http-equiv="refresh" content="30; url='play-action.html'" /> 
+  var distance = (startTime + 30000) - now;
+
+  // Time calculations
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = "Game begins in " + seconds + "s ";
+    
+  // Display the countdown and game end. Countdown starts when page is loaded, may not display full 30 seconds, but does count down from 30
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "Starting";
+  }
+}, 1000);
+</script>
+
+</body>
+</html>
