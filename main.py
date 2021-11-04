@@ -148,6 +148,10 @@ def playActionScreen():
     global playersListGreen
     return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore)
 
+@app.route('/timer', methods=['GET'])
+def timerScreen():
+    return render_template('timer.html')
+  
 if __name__ == '__main__':
     app.run()
     CORS(app)
