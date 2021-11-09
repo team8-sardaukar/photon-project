@@ -5,6 +5,7 @@
     <div class="black-bg">
         <div class="logo-background">
             <div class="bg-text" style="height:80%">
+                <p id="demo"></p>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         <ul class=flashes>
@@ -16,6 +17,32 @@
                 {% endwith %}
                     <div class="row">
                         <div class="column">
+                            <script>
+                            var startTime = new Date().getTime();
+
+                            // Updates every second
+                            var x = setInterval(function() {
+                            
+                              // Get the date and time that the page is loaded
+                              var now = new Date().getTime();
+                                
+                              // Find the distance between now and the count down date. 30000 = 30 seconds in milliseconds Ignore the following: <meta http-equiv="refresh" content="30; url='play-action.html'" /> 
+                              var distance = (startTime + 360000) - now;
+                            
+                              // Time calculations
+                              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                
+                              // Output the result in an element with id="demo"
+                              document.getElementById("demo").innerHTML = "Time Left " + minutes + ":" + seconds;
+                                
+                              // Display the countdown and game end. Countdown starts when page is loaded, may not display full 30 seconds, but does count down from 30
+                              if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("demo").innerHTML = "GAME OVER";
+                              }
+                            }, 1000);
+                            </script>
                             <div class="green-team">
                                 <h2>ALPHA GREEN</h2>
                                 <div class="row">
