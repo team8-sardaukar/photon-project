@@ -47,6 +47,18 @@
     width: 100vw;
     margin: 0vw;
 }
+.hits-bg {
+    margin: auto;
+    background-color: rgb(100,100,100);
+    color: white;
+    font-weight: bold;
+    border: 2px solid #0f0;
+    position: absolute;
+    size: 100%;
+    width: 40%;
+    height: 30%;
+    bottom: 10%;
+}
 .black-bg {
     background-color: black;
     height: 100vh;
