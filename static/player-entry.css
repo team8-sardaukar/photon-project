@@ -71,3 +71,10 @@
     text-align: center;
     list-style-type: none;
 }
+
+.switch {
+    background-color: black;
+    border: 2px solid white;
+    text-align: center;
+    padding: 20 px;
+}
