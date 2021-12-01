@@ -4,6 +4,8 @@ from flask_cors import CORS
 from entities.entity import Session, engine, Base
 from entities.player import Player
 from time import sleep
+import socket
+from threading import Thread
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -11,6 +13,31 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 Base.metadata.create_all(engine)
 session = Session()
 players = session.query(Player).all()
+
+localIP = "127.0.0.1"
+localPort = 7501
+bufferSize = 1024
+
+UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+
+UDPServerSocket.bind((localIP, localPort))
+
+def listenForUDP(): 
+    while(True):
+        bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+        message = bytesAddressPair[0]
+        address = bytesAddressPair[1]
+        clientMsg = "Message from Client:{}".format(message)
+        clientIP = "Client IP Address:{}".format(address)
+
+        # This part just splits gets takes the UDP message and formats it into a python list we can use
+        
+        playerHitsRaw = message.split(bytes(":", 'utf-8'))
+        playerHits = []
+        [playerHits.append(int(x.decode('utf-8'))) for x in playerHitsRaw]
+        print(playerHits)
+
+UDPListener = Thread(target=listenForUDP)
 
 #Just an example of the player list dicts formatting
 playersListEx = [ 
@@ -146,6 +173,10 @@ def getPlayerByID():
 def playActionScreen():
     global playersListRed
     global playersListGreen
+
+    # Start UDP Socket listener here-ish
+    UDPListener.start()
+
     return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore)
 
 @app.route('/timer', methods=['GET'])
