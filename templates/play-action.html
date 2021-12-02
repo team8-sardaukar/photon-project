@@ -26,69 +26,38 @@
                             // Updates every second
                             var x = setInterval(function() {
                             
-                              // Get the date and time that the page is loaded
-                              var now = new Date().getTime();
+                                // Get the date and time that the page is loaded
+                                var now = new Date().getTime();
                                 
-                              // Find the distance between now and the count down date. 30000 = 30 seconds in milliseconds Ignore the following: <meta http-equiv="refresh" content="30; url='play-action.html'" /> 
-                              var distance = (startTime + 360000) - now;
+                                // Find the distance between now and the count down date. 30000 = 30 seconds in milliseconds Ignore the following: <meta http-equiv="refresh" content="30; url='play-action.html'" /> 
+                                var distance = (startTime + 360000) - now;
                             
-                              // Time calculations
-                              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                // Time calculations
+                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                                 
-                              // Output the result in an element with id="demo"
-                              document.getElementById("demo").innerHTML = "Time Left " + minutes + ":" + seconds;
+                                // Output the result in an element with id="demo"
+                                document.getElementById("demo").innerHTML = "Time Left " + minutes + ":" + seconds;
                                 
-                              // Display the countdown and game end. Countdown starts when page is loaded, may not display full 30 seconds, but does count down from 30
-                              if (distance < 0) {
-                                clearInterval(x);
-                                document.getElementById("demo").innerHTML = "GAME OVER";
-                              }
+                                // Display the countdown and game end. Countdown starts when page is loaded, may not display full 30 seconds, but does count down from 30
+                                if (distance < 0) {
+                                    clearInterval(x);
+                                    document.getElementById("demo").innerHTML = "GAME OVER";
+                                }
+
+                                // Call function to update player scores
+                                updatePlayerScores();
+
                             }, 1000);
                             </script>
-                            <div class="green-team">
-                                <h2>ALPHA GREEN</h2>
-                                <div class="row">
-                                    <div class="column">
-                                        {% for item in greenList %}
-                                            <pre>{{item.codename}}</pre>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="column">
-                                        {% for item in greenList %}
-                                            <pre>{{item.score}}</pre>
-                                        {% endfor %}
-                                        <pre>{{greenScore}}</pre>
-                                    </div>
-                                </div>
-
-                                <ul class="hits-bg">
-                                    <li>Green Player HITS Red Player</li>
-                                </ul>
-
-                            </div>
                         </div>
-                        <div class="column">
-                            <div class="red-team">
-                            <h2>ALPHA RED</h2>
-                            <div class="row">
-                                <div class="column">
-                                    {% for item in redList %}
-                                        <pre>{{item.codename}}</pre>
-                                    {% endfor %}
-                                </div>
-                                <div class="column">
-                                    {% for item in redList %}
-                                        <pre>{{item.score}}</pre>
-                                    {% endfor %}
-                                    <pre>{{redScore}}</pre>
-                                </div>
-                        </div>
-                        <ul class="hits-bg" style="border: 2px solid #f00">
-                            <li>Red Player HITS Green Player</li>
-                        </ul>
                     </div>
+                    <div id="response">
+                        
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='jquery.js') }}"></script>
 </body>

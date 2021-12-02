@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, jsonify, flash
+from flask import Flask, request, render_template, jsonify, flash, make_response
+from flask.templating import render_template_string
 from sqlalchemy.sql.expression import update
 from flask_cors import CORS
 from entities.entity import Session, engine, Base
@@ -13,6 +14,8 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 Base.metadata.create_all(engine)
 session = Session()
 players = session.query(Player).all()
+
+UDPStarted = 0
 
 localIP = "127.0.0.1"
 localPort = 7501
@@ -36,6 +39,8 @@ def listenForUDP():
         playerHits = []
         [playerHits.append(int(x.decode('utf-8'))) for x in playerHitsRaw]
         print(playerHits)
+        updatePlayerScore(playerHits[0], playerHits[1])
+        playerHits.clear()
 
 UDPListener = Thread(target=listenForUDP)
 
@@ -66,7 +71,7 @@ def updatePlayers(id, codename, team=0, score=0): #team 0 = green, 1 = red
     
     #updatePlayerScore(1)
 
-def updatePlayerScore(id):
+def updatePlayerScore(id1, id2):
     print("updating score!")
     global playersListGreen
     global playersListRed
@@ -74,14 +79,26 @@ def updatePlayerScore(id):
     global greenScore
 
     for player in playersListGreen:
-        if (int(player["id"]) == id):
-            player["score"]+=10
-            greenScore+=10
+        if (int(player["id"]) == id1):
+            player["score"]+=100
+            greenScore+=100
     
     for player in playersListRed:
-        if (int(player["id"]) == id):
-            player["score"]+=10
-            redScore+=10
+        if (int(player["id"]) == id1):
+            player["score"]+=100
+            redScore+=100
+    
+    for player in playersListGreen:
+        if (int(player["id"]) == id2):
+            player["score"]-=100
+            redScore-=100
+            print(player)
+    
+    for player in playersListRed:
+        if (int(player["id"]) == id2):
+            player["score"]-=100
+            redScore-=100
+    
 
 @app.route('/', methods=['GET'])
 def home():
@@ -173,11 +190,25 @@ def getPlayerByID():
 def playActionScreen():
     global playersListRed
     global playersListGreen
+    global redScore
+    global greenScore
+    global UDPStarted
 
     # Start UDP Socket listener here-ish
-    UDPListener.start()
+    if (UDPStarted == 0):
+        UDPListener.start()
+        UDPStarted = 1
 
     return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore)
+
+@app.route('/play-action', methods=['POST'])
+def updatePlayAction():
+    global playersListRed
+    global playersListGreen
+    global redScore
+    global greenScore
+    
+    return jsonify(render_template('updatedPlayAction.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore))
 
 @app.route('/timer', methods=['GET'])
 def timerScreen():
