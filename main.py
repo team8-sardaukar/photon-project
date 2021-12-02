@@ -16,33 +16,42 @@ session = Session()
 players = session.query(Player).all()
 
 UDPStarted = 0
+stopUDP = False
 
 localIP = "127.0.0.1"
 localPort = 7501
 bufferSize = 1024
 
-UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+gameRunning = False
 
-UDPServerSocket.bind((localIP, localPort))
+UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+
+UDPSocket.bind((localIP, localPort))
 
 def listenForUDP(): 
+    global gameRunning
+
+    gameRunning = True
+
     while(True):
-        bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+
+        if(stopUDP):
+            gameRunning = False
+            break
+
+        bytesAddressPair = UDPSocket.recvfrom(bufferSize)
         message = bytesAddressPair[0]
-        address = bytesAddressPair[1]
-        clientMsg = "Message from Client:{}".format(message)
-        clientIP = "Client IP Address:{}".format(address)
+        # address = bytesAddressPair[1]
+        # clientMsg = "Message from Client:{}".format(message)
+        # clientIP = "Client IP Address:{}".format(address)
 
         # This part just splits gets takes the UDP message and formats it into a python list we can use
         
         playerHitsRaw = message.split(bytes(":", 'utf-8'))
         playerHits = []
         [playerHits.append(int(x.decode('utf-8'))) for x in playerHitsRaw]
-        print(playerHits)
         updatePlayerScore(playerHits[0], playerHits[1])
         playerHits.clear()
-
-UDPListener = Thread(target=listenForUDP)
 
 #Just an example of the player list dicts formatting
 playersListEx = [ 
@@ -64,6 +73,9 @@ playersListRed = []
 redScore = 0
 greenScore = 0
 
+UDPListeners = []
+ListenerPointer = 0
+
 playerHitsList = []
 
 def updatePlayers(id, codename, team=0, score=0): #team 0 = green, 1 = red
@@ -79,7 +91,6 @@ def updatePlayers(id, codename, team=0, score=0): #team 0 = green, 1 = red
                 playersListRed.append(newPlayerDict.copy())
 
 def updatePlayerScore(id1, id2):
-    print("updating score!")
     global playersListGreen
     global playersListRed
     global redScore
@@ -87,35 +98,35 @@ def updatePlayerScore(id1, id2):
 
     global playerHitsList
 
-    newHitDict = {"hitter":None, "hit":None}
+    if (gameRunning):
 
-    for player in playersListGreen:
-        if (int(player["id"]) == id1):
-            player["score"]+=100
-            greenScore+=100
-            newHitDict["hitter"] = player["codename"]
-    
-    for player in playersListRed:
-        if (int(player["id"]) == id1):
-            player["score"]+=100
-            redScore+=100
-            newHitDict["hitter"] = player["codename"]
-    
-    for player in playersListGreen:
-        if (int(player["id"]) == id2):
-            player["score"]-=100
-            greenScore-=100
-            print(player)
-            newHitDict["hit"] = player["codename"]
-    
-    for player in playersListRed:
-        if (int(player["id"]) == id2):
-            player["score"]-=100
-            redScore-=100
-            newHitDict["hit"] = player["codename"]
-    
-    playerHitsList.append(newHitDict)
-    print(playerHitsList)
+        newHitDict = {"hitter":None, "hit":None}
+
+        for player in playersListGreen:
+            if (int(player["id"]) == id1):
+                player["score"]+=100
+                greenScore+=100
+                newHitDict["hitter"] = player["codename"]
+        
+        for player in playersListRed:
+            if (int(player["id"]) == id1):
+                player["score"]+=100
+                redScore+=100
+                newHitDict["hitter"] = player["codename"]
+        
+        for player in playersListGreen:
+            if (int(player["id"]) == id2):
+                player["score"]-=100
+                greenScore-=100
+                newHitDict["hit"] = player["codename"]
+        
+        for player in playersListRed:
+            if (int(player["id"]) == id2):
+                player["score"]-=100
+                redScore-=100
+                newHitDict["hit"] = player["codename"]
+        
+        playerHitsList.append(newHitDict)
     
 
 @app.route('/', methods=['GET'])
@@ -126,8 +137,14 @@ def home():
 def playerEntryScreen():
     global playersListRed
     global playersListGreen
+    global greenScore
+    global redScore
+
     playersListGreen = []
     playersListRed = []
+    greenScore = 0
+    redScore = 0
+    
     return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
 
 @app.route('/player-entry', methods=['POST'])
@@ -212,9 +229,12 @@ def playActionScreen():
     global greenScore
     global UDPStarted
 
+    global UDPListeners
+
     # Start UDP Socket listener
     if (UDPStarted == 0):
-        UDPListener.start()
+        UDPListeners.append(Thread(target=listenForUDP))
+        UDPListeners[ListenerPointer].start()
         UDPStarted = 1
 
     return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList)
@@ -227,6 +247,24 @@ def updatePlayAction():
     global greenScore
     
     return jsonify(render_template('updatedPlayAction.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList))
+
+@app.route('/play-action', methods=['PUT'])
+def stopUDPListening():
+    global UDPStarted
+    global stopUDP
+
+    global UDPListeners
+    global ListenerPointer
+
+    if (UDPStarted != 0):
+        stopUDP = True
+        UDPListeners[ListenerPointer].join()
+
+        ListenerPointer+=1
+        UDPStarted = 0
+
+    return jsonify(render_template('updatedPlayAction.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList))
+
 
 @app.route('/timer', methods=['GET'])
 def timerScreen():
