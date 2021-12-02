@@ -6,6 +6,8 @@ function updatePlayerScores() {
 			$('div#response').html(resp);
 		}
 	});
+	var objDiv = document.getElementById("hits-list");
+     objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 function stopUDPListener() {

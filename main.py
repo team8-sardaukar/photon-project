@@ -124,7 +124,7 @@ def updatePlayerScore(id1, id2):
                 redScore-=100
                 newHitDict["hit"] = player["codename"]
         
-        playerHitsList.append(newHitDict)
+        playerHitsList.insert(0, newHitDict)
     
 
 @app.route('/', methods=['GET'])

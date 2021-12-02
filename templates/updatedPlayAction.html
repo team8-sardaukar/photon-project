@@ -9,6 +9,7 @@
                     {% for item in greenList %}
                         <pre>{{item.codename}}</pre>
                     {% endfor %}
+                    <pre>TOTAL</pre>
                 </div>
                 <div class="column">
                     {% for item in greenList %}
@@ -27,6 +28,7 @@
                 {% for item in redList %}
                     <pre>{{item.codename}}</pre>
                 {% endfor %}
+                <pre>TOTAL</pre>
             </div>
             <div class="column">
                 {% for item in redList %}
@@ -36,8 +38,8 @@
             </div>
     </div>
 </div>
-<div class="hits-bg" style="border: 2px solid rgb(10, 10, 165)">
-    <ul style="list-style-type: none; max-height: 85%; overflow: auto; left: 50%;">
+<div id="hits-list" class="hits-bg" style="border: 2px solid rgb(10, 10, 165); overflow: auto;">
+    <ul style="list-style-type: none; max-height: 85%; left: 50%;">
         {% for item in hitsList %}
             <li>{{item.hitter}} HITS {{item.hit}}</li>
         {% endfor %}
