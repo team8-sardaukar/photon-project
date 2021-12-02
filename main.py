@@ -31,12 +31,8 @@ UDPSocket.bind((localIP, localPort))
 def listenForUDP(): 
     global gameRunning
 
-    gameRunning = True
-
     while(True):
-
         if(stopUDP):
-            gameRunning = False
             break
 
         bytesAddressPair = UDPSocket.recvfrom(bufferSize)
@@ -73,8 +69,10 @@ playersListRed = []
 redScore = 0
 greenScore = 0
 
-UDPListeners = []
-ListenerPointer = 0
+UDPListener = None
+
+UDPListener = Thread(target=listenForUDP)
+UDPListener.start()
 
 playerHitsList = []
 
@@ -139,11 +137,13 @@ def playerEntryScreen():
     global playersListGreen
     global greenScore
     global redScore
+    global playerHitsList
 
     playersListGreen = []
     playersListRed = []
     greenScore = 0
     redScore = 0
+    playerHitsList = []
     
     return render_template('player-entry.html', greenList = playersListGreen, redList = playersListRed)
 
@@ -229,13 +229,11 @@ def playActionScreen():
     global greenScore
     global UDPStarted
 
-    global UDPListeners
+    global gameRunning
+
 
     # Start UDP Socket listener
-    if (UDPStarted == 0):
-        UDPListeners.append(Thread(target=listenForUDP))
-        UDPListeners[ListenerPointer].start()
-        UDPStarted = 1
+    gameRunning = True
 
     return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList)
 
@@ -253,15 +251,10 @@ def stopUDPListening():
     global UDPStarted
     global stopUDP
 
-    global UDPListeners
+    global gameRunning
     global ListenerPointer
 
-    if (UDPStarted != 0):
-        stopUDP = True
-        UDPListeners[ListenerPointer].join()
-
-        ListenerPointer+=1
-        UDPStarted = 0
+    gameRunning = False
 
     return jsonify(render_template('updatedPlayAction.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList))
 
