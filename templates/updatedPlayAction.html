@@ -1,6 +1,6 @@
 <link rel="icon" type="image/x-icon" href="/static/favicon.png">
 <link rel="stylesheet" href="/static/player-entry.css"></head>
-<div id="response" class="row">
+<div class="row">
     <div class="column">
         <div class="green-team">
             <h2>ALPHA GREEN</h2>
@@ -17,13 +17,9 @@
                     <pre>{{greenScore}}</pre>
                 </div>
             </div>
-
-            <ul class="hits-bg">
-                <li>Green Player HITS Red Player</li>
-            </ul>
         </div>
     </div>
-    <div id="response" class="column">
+    <div class="column">
         <div class="red-team">
         <h2>ALPHA RED</h2>
         <div class="row">
@@ -39,7 +35,11 @@
                 <pre>{{redScore}}</pre>
             </div>
     </div>
-    <ul class="hits-bg" style="border: 2px solid #f00">
-        <li>Red Player HITS Green Player</li>
+</div>
+<div class="hits-bg" style="border: 2px solid rgb(10, 10, 165)">
+    <ul style="list-style-type: none; max-height: 85%; overflow: auto; left: 50%;">
+        {% for item in hitsList %}
+            <li>{{item.hitter}} HITS {{item.hit}}</li>
+        {% endfor %}
     </ul>
 </div>

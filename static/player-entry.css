@@ -58,6 +58,8 @@
     width: 40%;
     height: 30%;
     bottom: 10%;
+    left: 30%;
+    box-sizing: border-box;
 }
 .black-bg {
     background-color: black;

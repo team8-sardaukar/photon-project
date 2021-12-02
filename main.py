@@ -52,10 +52,19 @@ playersListEx = [
     }
 ]
 
+playerHitsListEx = [
+    {
+        'hitter':'',
+        'hit':''
+    }
+]
+
 playersListGreen = []
 playersListRed = []
 redScore = 0
 greenScore = 0
+
+playerHitsList = []
 
 def updatePlayers(id, codename, team=0, score=0): #team 0 = green, 1 = red
     global players
@@ -68,8 +77,6 @@ def updatePlayers(id, codename, team=0, score=0): #team 0 = green, 1 = red
                 playersListGreen.append(newPlayerDict.copy())
             else:
                 playersListRed.append(newPlayerDict.copy())
-    
-    #updatePlayerScore(1)
 
 def updatePlayerScore(id1, id2):
     print("updating score!")
@@ -78,26 +85,37 @@ def updatePlayerScore(id1, id2):
     global redScore
     global greenScore
 
+    global playerHitsList
+
+    newHitDict = {"hitter":None, "hit":None}
+
     for player in playersListGreen:
         if (int(player["id"]) == id1):
             player["score"]+=100
             greenScore+=100
+            newHitDict["hitter"] = player["codename"]
     
     for player in playersListRed:
         if (int(player["id"]) == id1):
             player["score"]+=100
             redScore+=100
+            newHitDict["hitter"] = player["codename"]
     
     for player in playersListGreen:
         if (int(player["id"]) == id2):
             player["score"]-=100
-            redScore-=100
+            greenScore-=100
             print(player)
+            newHitDict["hit"] = player["codename"]
     
     for player in playersListRed:
         if (int(player["id"]) == id2):
             player["score"]-=100
             redScore-=100
+            newHitDict["hit"] = player["codename"]
+    
+    playerHitsList.append(newHitDict)
+    print(playerHitsList)
     
 
 @app.route('/', methods=['GET'])
@@ -194,12 +212,12 @@ def playActionScreen():
     global greenScore
     global UDPStarted
 
-    # Start UDP Socket listener here-ish
+    # Start UDP Socket listener
     if (UDPStarted == 0):
         UDPListener.start()
         UDPStarted = 1
 
-    return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore)
+    return render_template('play-action.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList)
 
 @app.route('/play-action', methods=['POST'])
 def updatePlayAction():
@@ -208,7 +226,7 @@ def updatePlayAction():
     global redScore
     global greenScore
     
-    return jsonify(render_template('updatedPlayAction.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore))
+    return jsonify(render_template('updatedPlayAction.html', greenList = playersListGreen, redList = playersListRed, redScore = redScore, greenScore = greenScore, hitsList = playerHitsList))
 
 @app.route('/timer', methods=['GET'])
 def timerScreen():
