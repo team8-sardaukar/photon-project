@@ -4,7 +4,7 @@ function formSubmit() {
     redIdStr = 'RedId'
     greenNmStr = 'GreenName'
     redNmStr = 'RedName'
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 10; i++) {
         concatGreenIdStr = greenIdStr + i.toString();
         concatRedIdStr = redIdStr + i.toString();
         concatGreenNmStr = greenIdStr + i.toString();
