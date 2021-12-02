@@ -78,5 +78,26 @@
     background-color: black;
     border: 2px solid white;
     text-align: center;
-    padding: 20 px;
+    width: 10%;
+    height: 5%;
+    padding-top: 20 px;
+    float: left;
+}
+.start {
+    background-color: black;
+    border: 2px solid white;
+    text-align: center;
+    width: 10%;
+    height: 5%;
+    padding-top: 20 px;
+    float: right;
+}
+
+.button {
+    background-color: black;
+    border: 2px solid white;
+    text-align: center;
+    height: 5%;
+    width: 35%;
+    color: white;
 }
