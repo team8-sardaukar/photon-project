@@ -14,7 +14,7 @@ directory and run `pip install pipenv`
   * Open the pipenv shell: `pipenv shell`
   * Do: `gunicorn main:app`
   * Assuming all went well, you should now be able to navigate to "localhost:8000" in your browser and see the webapp!
-6) (DON'T DO THIS IF YOU DID NUMBER 9) You can just use Flask to host the webserver if you can't use guinicorn
+6) (DON'T DO THIS IF YOU DID NUMBER 5) You can just use Flask to host the webserver if you can't use guinicorn
   * Outside of virtual environment do `set FLASK_APP=main.py`
   * Then do: `pipenv shell`
   * Now do `flask run`
