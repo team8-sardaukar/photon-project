@@ -7,6 +7,7 @@ from entities.player import Player
 from time import sleep
 import socket
 from threading import Thread
+from python_trafficgenerator import generateTraffic
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -23,10 +24,20 @@ localPort = 7501
 bufferSize = 1024
 
 gameRunning = False
+trafficStarted = False
 
 UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 
 UDPSocket.bind((localIP, localPort))
+
+def makeTraffic():
+    generateTraffic(playersListRed[0]["id"], 
+        playersListRed[1]["id"],
+        playersListGreen[0]["id"],
+        playersListGreen[1]["id"],
+        1000)
+
+TrafficGenerator = Thread(target=makeTraffic)
 
 def listenForUDP(): 
     global gameRunning
@@ -230,6 +241,11 @@ def playActionScreen():
     global UDPStarted
 
     global gameRunning
+    global trafficStarted
+
+    if (not trafficStarted):
+        TrafficGenerator.start()
+        trafficStarted = True
 
 
     # Start UDP Socket listener
@@ -252,7 +268,6 @@ def stopUDPListening():
     global stopUDP
 
     global gameRunning
-    global ListenerPointer
 
     gameRunning = False
 
