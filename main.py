@@ -252,7 +252,6 @@ def stopUDPListening():
     global stopUDP
 
     global gameRunning
-    global ListenerPointer
 
     gameRunning = False
 
