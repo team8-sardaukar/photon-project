@@ -1,6 +1,6 @@
 # photon-project
 Programming the Photon Laser Tag game
-## Setup
+## Setup and Running the Project
 **Dependencies**
 *These are only necessary for setting up a local dev environment*
 1) Install pipenv to set up a virtual environment for the Python side of the webapp. Go to your photon-project
@@ -14,11 +14,17 @@ directory and run `pip install pipenv`
   * Open the pipenv shell: `pipenv shell`
   * Do: `gunicorn main:app`
   * Assuming all went well, you should now be able to navigate to "localhost:8000" in your browser and see the webapp!
-6) (DON'T DO THIS IF YOU DID NUMBER 9) You can just use Flask to host the webserver if you can't use guinicorn
+6) (DO THIS INSTEAD OF 5 IF ON WINDOWS) You can just use Flask to host the webserver if you can't use guinicorn
   * Outside of virtual environment do `set FLASK_APP=main.py`
   * Then do: `pipenv shell`
   * Now do `flask run`
   * Now go to the IP address and port it gives you in your browser and it should work!
+7) Now to start the traffic generator given to Mr. Strother, you can just open up a new shell in the top level directory
+of the project and do `python3 python_trafficgenerator.py`. Then just input whatever player IDs you chose to input for the game
+on the player entry screen. 
+8) To start the game just click "start game" or "switch screens" on the player entry screen, that'll start the countdown timer.
+9) On the play-action screen, you can just click "switch screens" after the game is over to go back to the player-entry screen
+and start a new game. Just be sure to restart the traffic generator with new player IDs if you make a game with different players. 
 ***
 ## Deploying to Heroku
 *This assumes that you are already logged in to the Heroku CLI*
